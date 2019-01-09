@@ -152,6 +152,7 @@ static void printExpectedNumber(int threshold)
 			expected += lengthFreq.get(x) * probs.get(x);
 		}
 	}
+	System.out.println();
 	System.out.println("Total reads of length <= " + threshold + ": " + tot);
 	System.out.println("Expected number of uncontained reads of length <= " + threshold + ": " + expected);
 	System.out.println("Percentage uncontained: " + 100 * expected / tot);
