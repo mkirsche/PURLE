@@ -34,6 +34,7 @@ public static void main(String[] args) throws IOException
 		System.out.println("  Alternately, the input file can be in FASTQ or FASTA format.");
 		System.out.println("Outputfile is the file to output sample noncontained read lengths to");
 		System.out.println("Genomelength is an integer representing the length (in bp) of the genome");
+		return;
 	}
 	fn = args[0];
 	ofn = args[1];
