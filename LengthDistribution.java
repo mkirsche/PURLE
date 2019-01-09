@@ -154,7 +154,8 @@ static void printExpectedNumber(int threshold)
 	}
 	System.out.println();
 	System.out.println("Total reads of length <= " + threshold + ": " + tot);
-	System.out.println("Expected number of uncontained reads of length <= " + threshold + ": " + expected);
-	System.out.println("Percentage uncontained: " + 100 * expected / tot);
+	System.out.println("Expected number of uncontained reads of length <= " + threshold + ": " 
+			+ String.format("%.2f", expected));
+	System.out.println("Percentage uncontained: " + String.format("%.2f", 100 * expected / tot));
 }
 }
