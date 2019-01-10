@@ -1,6 +1,6 @@
 /*
  * Given a distribution of read lengths and genome length, this software outputs the following:
- *   1. An expected distribution of read lengths of the set of reads which are not contained in any other read
+ *   1. The expected distribution of read lengths of the set of reads which are not contained in any other read
  *   2. The expected number of non-contained reads below each of a pre-defined set of length thresholds
  */
 import java.util.*;
@@ -25,20 +25,30 @@ public class LengthDistribution {
 	 */
 	static int[] thresholds = {500, 1000, 2500, 5000, 10000, 20000, 50000};
 	
+	/*
+	 * Whether or not to generate a sample length distribution instead of the expected one
+	 */
+	static boolean sample = false;
+	
 public static void main(String[] args) throws IOException
 {
-	if(args.length != 3)
+	if(args.length != 3 && args.length != 4)
 	{
-		System.out.println("Usage: java LengthDistribution Inputfile Outputfile Genomelength");
+		System.out.println("Usage: java LengthDistribution Inputfile Outputfile Genomelength [--sample]");
 		System.out.println("Inputfile should contain the length of one sequence (in bp) per line");
 		System.out.println("  Alternately, the input file can be in FASTQ or FASTA format.");
 		System.out.println("Outputfile is the file to output sample noncontained read lengths to");
 		System.out.println("Genomelength is an integer representing the length (in bp) of the genome");
+		System.out.println("--sample is an optional flag to produce a sample length distribution instead of the average");
 		return;
 	}
 	fn = args[0];
 	ofn = args[1];
 	genomeLength = Integer.parseInt(args[2]);
+	if(args.length > 3 && args[3].equals("--sample"))
+	{
+		sample = true;
+	}
 	lengthFreq = new TreeMap<Integer, Integer>(Collections.reverseOrder());
 	Scanner input = new Scanner(new FileInputStream(new File(fn)));
 	boolean fasta = false;
@@ -102,7 +112,7 @@ public static void main(String[] args) throws IOException
 		probs.put(x, probUncontained);
 	}
 	
-	makeDistribution();
+	makeDistribution(sample);
 	
 	for(int t : thresholds)
 	{
@@ -110,7 +120,7 @@ public static void main(String[] args) throws IOException
 	}
 	
 }
-static void makeDistribution() throws IOException
+static void makeDistribution(boolean sample) throws IOException
 {
 	Random r = new Random();
 	TreeMap<Integer, Integer> newList = new TreeMap<Integer, Integer>();
@@ -120,7 +130,7 @@ static void makeDistribution() throws IOException
 		double p = probs.get(x);
 		for(int i = 0; i<y; i++)
 		{
-			if(r.nextDouble() < p)
+			if((sample && r.nextDouble() < p) || (!sample && i <= p*y - 0.5))
 			{
 				if(!newList.containsKey(x)) newList.put(x, 1);
 				else newList.put(x, newList.get(x) + 1);
