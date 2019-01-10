@@ -2,7 +2,7 @@
 
 Here we introduce PURLE, software for Probabilistic Uncontained Read Length Estimation.  
   
-Given a set of genomic reads, especially in higher coverage settings, it is expected that many of them will be strictly contained in other reads (i.e., the interval of the genome they come from is a subset of the interval of some other read), and hence give mostly redundant information.  Given a length distribution of reads from a genome with a given length, this software 1) Samples a distribution of read lengths for the uncontained reads (assuming each read independently comes from a uniformly random position in the genome) and outputs a file containing these read lengths and 2) Helps in an estimating a length cutoff by calculating the expected number of uncontained reads below a predetermined set of length thresholds.
+Given a set of genomic reads, especially in higher coverage settings, it is expected that many of them will be strictly contained in other reads (i.e., the interval of the genome they come from is a subset of the interval of some other read), and hence give mostly redundant information.  Given a length distribution of reads from a genome with a given length, this software 1) Gets the expected distribution, or optionally a sampled distribution, of read lengths for the uncontained reads (assuming each read independently comes from a uniformly random position in the genome) and outputs a file containing these read lengths and 2) Helps in an estimating a length cutoff by calculating the expected number of uncontained reads below a predetermined set of length thresholds.
 
 ## Compilation: 
 
