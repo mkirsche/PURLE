@@ -1,4 +1,4 @@
-5556# PURLE
+# PURLE
 
 Here we introduce PURLE, software for Probabilistic Uncontained Read Length Estimation.  
   
